@@ -15,7 +15,7 @@ Final result on the competition's hidden test set (one submission allowed):
 | Accuracy | **38.15%** |
 | Macro F1-score | **36.20** |
 | Random-guess baseline (10 classes) | ~10% |
-| Leaderboard rank | [TODO: rank / number of participants] |
+
 
 Live leaderboard: [DRV Leaderboard](https://tasneem-mselim.github.io/DRV/)
 
@@ -27,8 +27,6 @@ Live leaderboard: [DRV Leaderboard](https://tasneem-mselim.github.io/DRV/)
 - **Output:** one of 10 driver activity classes (`0`-`9`)
 - **Primary metric:** Macro F1, plus accuracy
 
-Classes (State Farm dataset): [TODO: confirm mapping used in this competition]
-safe driving, texting (right), phone (right), texting (left), phone (left), operating the radio, drinking, reaching behind, hair and makeup, talking to passenger.
 
 ## 📂 Dataset
 
@@ -48,7 +46,7 @@ safe driving, texting (right), phone (right), texting (left), phone (left), oper
 
 ## 🔬 Analysis
 
-Validation accuracy reached about **99%** (e.g. 99.43% at epoch 6), while the hidden test accuracy was **38.15%**. A gap this large almost certainly means the validation set was not independent of the training set: the State Farm images come from video frames of a limited number of drivers, so a random image-level split puts near-duplicate frames of the same driver in both training and validation. The model likely learned to recognize drivers and their surroundings, not only behaviors, and this did not generalize to the unseen drivers in the test set. [TODO: confirm by re-running with a driver-level split]
+Validation accuracy reached about **99%** (e.g. 99.43% at epoch 6), while the hidden test accuracy was **38.15%**. A gap this large almost certainly means the validation set was not independent of the training set: the State Farm images come from video frames of a limited number of drivers, so a random image-level split puts near-duplicate frames of the same driver in both training and validation. The model likely learned to recognize drivers and their surroundings, not only behaviors, and this did not generalize to the unseen drivers in the test set. 
 
 Planned improvements:
 
@@ -76,7 +74,7 @@ pip install -r requirements.txt   # [TODO: add requirements.txt]
 
 | Path | Description |
 | :--- | :--- |
-| `starter-code-competition.ipynb` | Starter notebook from the organizer [TODO: link or rename your own notebook] |
+| `image-project.ipynb` |  Jupyter Notebook 
 | `evaluate.py`, `generate_leaderboard_html.py`, `final_leaderboard.csv`, `index.html` | Competition evaluation and leaderboard (organizer) |
 | `submission/`, `encryption/` | Encrypted submission workflow (organizer) |
 
