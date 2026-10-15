@@ -74,7 +74,7 @@ pip install -r requirements.txt   # [TODO: add requirements.txt]
 
 | Path | Description |
 | :--- | :--- |
-| `image-project.ipynb` |  Jupyter Notebook 
+| `CXR.ipynb , DRV.ipynb ` |  Jupyter Notebook 
 | `evaluate.py`, `generate_leaderboard_html.py`, `final_leaderboard.csv`, `index.html` | Competition evaluation and leaderboard (organizer) |
 | `submission/`, `encryption/` | Encrypted submission workflow (organizer) |
 
