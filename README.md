@@ -1,111 +1,90 @@
-# DRV
-Driver behavior detection 
-
 # 🚗 Driver Behavior Detection
 
-## 📌 Overview
-Detect distracted driving behaviors.
+10-class image classification of distracted driving behaviors using CNNs and transfer learning.
 
-## 🎯 Task Description
-10 driver activity classes.
-
-## 🏆 Objective
-Classify driver actions accurately.
-
-## 🔗 Dataset Link
-https://www.kaggle.com/datasets/rightway11/state-farm-distracted-driver-detection
-
-## 📂 Dataset Description
-State Farm driver behavior dataset.
-
-## 📁 Dataset Structure
-train/, test/
-
-## 🏆 Competition Leaderboard
-The real-time rankings and model performance metrics for this competition are hosted on the official PLT dashboard.
-
-[![View Leaderboard]](https://tasneem-mselim.github.io/DRV/)
-
-> **Note:** The leaderboard is updated automatically following each successful submission and evaluation cycle. Rankings are primarily sorted by **F1-Score (Macro)** to account for class balance.
+> This repository is my fork of the class competition repo by [Tasneem Selim](https://github.com/tasneem-mselim/DRV). The competition infrastructure (evaluation scripts, leaderboard, submission encryption) belongs to the organizer. The model, experiments, and analysis described below are my own work.
 
 ---
 
-### 📊 Evaluation Metrics
-To ensure the robustness of the models, we evaluate participants based on:
-*   **Accuracy:** Overall percentage of correct leaf classifications.
-*   **F1-Score:** The harmonic mean of precision and recall (Macro-averaged), which is our primary ranking metric.
+## 📊 Results
 
-You can view the full statistical breakdown of all teams here: [Interactive Results Table](https://tasneem-mselim.github.io/PLT/)
+Final result on the competition's hidden test set (one submission allowed):
 
+| Metric | Score |
+| :--- | :---: |
+| Accuracy | **38.15%** |
+| Macro F1-score | **36.20** |
+| Random-guess baseline (10 classes) | ~10% |
+| Leaderboard rank | [TODO: rank / number of participants] |
 
-## 📝 Submission Format
-Your model must output a CSV file named `submission.csv`. It must strictly follow this structure:
-
-| id | label |
-| :--- | :--- |
-| img_1.JPG | 0 |
-| img_2.JPG | 1 |
-
-### 🔍 Constraints:
-*   **ID Match:** The `id` must match the provided test image names exactly.
-*   **Target Range:** `label` must be an integer.
+Live leaderboard: [DRV Leaderboard](https://tasneem-mselim.github.io/DRV/)
 
 ---
 
-## 🛠 How to Submit Your Results
+## 🎯 Task
 
-Follow these steps precisely to ensure your submission is evaluated correctly.
+- **Input:** an image from a dashboard camera showing the driver
+- **Output:** one of 10 driver activity classes (`0`-`9`)
+- **Primary metric:** Macro F1, plus accuracy
 
-### 1- Fork the Repository
-Click the **Fork** button at the top right of this repository to create your own copy.
+Classes (State Farm dataset): [TODO: confirm mapping used in this competition]
+safe driving, texting (right), phone (right), texting (left), phone (left), operating the radio, drinking, reaching behind, hair and makeup, talking to passenger.
 
-### 2- Prepare Locally
-Navigate to the `submission/` folder in your local environment. Ensure you have the following files in one directory:
-1.  `encrypt_submission.py` (Provided in the repo)
-2.  `public_key.pem` (Provided in the repo)
-3.  Your generated `submission.csv`
+## 📂 Dataset
 
-### 3- Encrypt Your Submission
-Open your terminal or CMD in that folder and run the encryption command:
+[State Farm Distracted Driver Detection](https://www.kaggle.com/datasets/rightway11/state-farm-distracted-driver-detection), organized as `train/` and `test/`.
+
+- Training images used: [TODO: number; the full dataset is much larger than 6,000, so state the subset if you used one]
+- Validation strategy: [TODO: ideally split by driver, so validation drivers are unseen in training]
+- Rules: CNNs and transfer learning allowed; no external driving datasets.
+
+## 🧠 My Approach
+
+- **Model:** [TODO: exact architecture, e.g. ResNet50 / EfficientNet-B0, pretrained on ImageNet]
+- **Preprocessing:** [TODO: resize, normalization]
+- **Augmentation:** [TODO: what you used, and why it suits driver images]
+- **Training setup:** [TODO: optimizer, learning rate, epochs, batch size, frozen vs fine-tuned layers]
+- **Frameworks:** Python, PyTorch / TensorFlow, OpenCV [TODO: keep only what you used]
+
+## 🔬 Analysis
+
+[TODO: add these once you have them]
+
+- Confusion matrix and per-class F1 (which classes are confused, e.g. phone vs texting)
+- Gap between validation and hidden-test performance
+- Effect of fine-tuning depth and augmentation
+- Failure cases: inter-class similarity, occlusion, lighting
+
+## ⚠️ Limitations
+
+- Test accuracy (38.15%) is far below what published methods reach on this dataset. I treat this project as an exploratory study of failure modes rather than a state-of-the-art result.
+- Likely contributors [TODO: confirm or remove after your own experiments]: generalization to drivers not seen in training, limited fine-tuning, and visually similar classes.
+
+## 🚀 Reproducing
 
 ```bash
-python encrypt_submission.py submission.csv submission.enc submission.enc.key public_key.pem
+git clone https://github.com/Yousif2005/DRV.git
+cd DRV
+pip install -r requirements.txt   # [TODO: add requirements.txt]
+jupyter notebook starter-code-competition.ipynb   # [TODO: or name of your own notebook]
 ```
 
-This will generate two files:
+## 🗂 Repository Contents
 
-- `submission.enc` → the encrypted submission  
-- `submission.enc.key` → encryption key  
+| Path | Description |
+| :--- | :--- |
+| `starter-code-competition.ipynb` | Starter notebook from the organizer [TODO: link or rename your own notebook] |
+| `evaluate.py`, `generate_leaderboard_html.py`, `final_leaderboard.csv`, `index.html` | Competition evaluation and leaderboard (organizer) |
+| `submission/`, `encryption/` | Encrypted submission workflow (organizer) |
 
-Both files are required for submission. Do **not** submit the original CSV.
+## 📝 Original Competition Format
 
-### 4- Place Encrypted Files in Submission Folder
-
-Upload these files to the `submission/` folder in your forked repository
-
-### 5- Create a Pull Request
-Your submission will be reviewed and evaluated, and the results will be added to the leaderboard.
-
-
-Only one submission is allowed for each participant. Subsequent submissions will be automatically rejected
-
-
-
-
-## 📏 Evaluation Metric
-Accuracy, F1-score
-
-## ✅ Allowed
-CNNs, transfer learning
-
-## ❌ Not Allowed
-External driving datasets
-
-## 🧪 Baseline Model
-Simple CNN
+Participants submit `submission.csv` with columns `id` (test image name, exactly as provided) and `label` (integer class `0`-`9`), encrypted with the provided script and submitted through a pull request. One submission per participant. Full instructions are in the [upstream repository](https://github.com/tasneem-mselim/DRV).
 
 ## 📚 References
-State Farm Dataset
 
-## 👩‍🏫 Organizer
-Tasneem Selim
+- State Farm Distracted Driver Detection, Kaggle.
+
+## 👩‍🏫 Credits
+
+Competition organizer: Tasneem Selim
