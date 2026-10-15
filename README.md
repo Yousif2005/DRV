@@ -34,31 +34,34 @@ safe driving, texting (right), phone (right), texting (left), phone (left), oper
 
 [State Farm Distracted Driver Detection](https://www.kaggle.com/datasets/rightway11/state-farm-distracted-driver-detection), organized as `train/` and `test/`.
 
-- Training images used: [TODO: number; the full dataset is much larger than 6,000, so state the subset if you used one]
-- Validation strategy: [TODO: ideally split by driver, so validation drivers are unseen in training]
+- Training images used: 13,936 (11,153 training / 2,783 validation), 10 classes
+- Validation strategy: random 80/20 image-level split (not split by driver; see Analysis)
 - Rules: CNNs and transfer learning allowed; no external driving datasets.
 
 ## 🧠 My Approach
 
-- **Model:** [TODO: exact architecture, e.g. ResNet50 / EfficientNet-B0, pretrained on ImageNet]
-- **Preprocessing:** [TODO: resize, normalization]
-- **Augmentation:** [TODO: what you used, and why it suits driver images]
-- **Training setup:** [TODO: optimizer, learning rate, epochs, batch size, frozen vs fine-tuned layers]
-- **Frameworks:** Python, PyTorch / TensorFlow, OpenCV [TODO: keep only what you used]
+- **Model:** custom CNN trained from scratch (no pretrained weights): 3 × [Conv2D (32/64/128 filters, 3×3, ReLU) + MaxPool], Flatten, Dense(128) + Dropout(0.5), softmax over 10 classes.
+- **Input / preprocessing:** images resized to 128×128 and rescaled to [0, 1]. No data augmentation.
+- **Training:** Adam (lr = 0.001), batch size 16, up to 10 epochs, early stopping on validation loss (patience 3), seed 25. About 26 minutes on a Kaggle notebook.
+- **Validation:** random 80/20 split of the training images (11,153 train / 2,783 validation).
+- **Framework:** Python, TensorFlow/Keras, NumPy, pandas, Matplotlib.
 
 ## 🔬 Analysis
 
-[TODO: add these once you have them]
+Validation accuracy reached about **99%** (e.g. 99.43% at epoch 6), while the hidden test accuracy was **38.15%**. A gap this large almost certainly means the validation set was not independent of the training set: the State Farm images come from video frames of a limited number of drivers, so a random image-level split puts near-duplicate frames of the same driver in both training and validation. The model likely learned to recognize drivers and their surroundings, not only behaviors, and this did not generalize to the unseen drivers in the test set. [TODO: confirm by re-running with a driver-level split]
 
-- Confusion matrix and per-class F1 (which classes are confused, e.g. phone vs texting)
-- Gap between validation and hidden-test performance
-- Effect of fine-tuning depth and augmentation
-- Failure cases: inter-class similarity, occlusion, lighting
+Planned improvements:
+
+- Split validation by driver so it measures generalization to new drivers.
+- Use a pretrained backbone (e.g. ResNet / EfficientNet) with fine-tuning.
+- Add augmentation (crops, brightness, small rotations).
+- Report a confusion matrix and per-class F1.
 
 ## ⚠️ Limitations
 
-- Test accuracy (38.15%) is far below what published methods reach on this dataset. I treat this project as an exploratory study of failure modes rather than a state-of-the-art result.
-- Likely contributors [TODO: confirm or remove after your own experiments]: generalization to drivers not seen in training, limited fine-tuning, and visually similar classes.
+- The reported validation accuracy (~99%) is not a reliable estimate of real performance, for the reason above. The hidden-test result (38.15% accuracy, 36.20 Macro F1) is the honest number.
+- No augmentation or transfer learning was used in this version.
+- This is a competition project and a first baseline, not a state-of-the-art result.
 
 ## 🚀 Reproducing
 
@@ -66,7 +69,7 @@ safe driving, texting (right), phone (right), texting (left), phone (left), oper
 git clone https://github.com/Yousif2005/DRV.git
 cd DRV
 pip install -r requirements.txt   # [TODO: add requirements.txt]
-jupyter notebook starter-code-competition.ipynb   # [TODO: or name of your own notebook]
+# open and run your notebook (Kaggle notebook: image-project.ipynb)
 ```
 
 ## 🗂 Repository Contents
