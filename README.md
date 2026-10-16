@@ -8,6 +8,9 @@
 
 ## 📊 Results
 
+<img width="981" height="374" alt="DRV" src="https://github.com/user-attachments/assets/ee5cac6f-6d63-4dae-9931-7d190cd57605" />
+
+
 Final result on the competition's hidden test set (one submission allowed):
 
 | Metric | Score |
