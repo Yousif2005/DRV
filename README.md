@@ -69,15 +69,14 @@ Planned improvements:
 ```bash
 git clone https://github.com/Yousif2005/DRV.git
 cd DRV
-pip install -r requirements.txt   # [TODO: add requirements.txt]
-# open and run your notebook (Kaggle notebook: image-project.ipynb)
+# open and run your notebook (Kaggle notebook: DRV.ipynb)
 ```
 
 ## 🗂 Repository Contents
 
 | Path | Description |
 | :--- | :--- |
-| `DRV.ipynb ` |  Jupyter Notebook 
+| `DRV.ipynb ` |  Jupyter Notebook |
 | `evaluate.py`, `generate_leaderboard_html.py`, `final_leaderboard.csv`, `index.html` | Competition evaluation and leaderboard (organizer) |
 | `submission/`, `encryption/` | Encrypted submission workflow (organizer) |
 
